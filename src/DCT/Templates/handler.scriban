@@ -1,0 +1,9 @@
+namespace {{ namespace }};
+
+public class {{ name }}CommandHandler : IRequestHandler<{{ name }}Command>
+{
+    public async Task Handle({{ name }}Command command, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+}

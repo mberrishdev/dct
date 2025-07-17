@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <PackageId>dct</PackageId>
+    <Version>0.0.2</Version>
+    <Authors>MberrishDev</Authors>
+    <Description>CLI tool to generate CQRS and Clean Architecture artifacts in .NET projects.</Description>
+    <PackageTags>dotnet;cli;CQRS;CleanArchitecture;generator</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/mberrishdev/dct</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mberrishdev/dct.git</RepositoryUrl>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>dct</ToolCommandName>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Scriban" Version="6.2.1" />
+    <PackageReference Include="Spectre.Console" Version="0.50.0" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.50.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

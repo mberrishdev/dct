@@ -1,0 +1,13 @@
+namespace {{ namespace }};
+
+public class {{ name }}Query : IRequest<object>
+{
+}
+
+public class {{ name }}QueryHandler : IRequestHandler<{{ name }}Query, object>>
+{
+    public async Task<object> Handle({{ name }}Query request, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+}

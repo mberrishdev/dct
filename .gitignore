@@ -1,0 +1,45 @@
+# .NET build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+.nuget/
+
+# Others
+*.vspscc
+*.vssscc
+_ReSharper*/
+
+# Test results
+TestResults/
+
+# Dotnet tool artifacts
+*.dbmdl
+
+# Local config
+*.local.json
+
+# Global.json lock
+global.json.lock 
+testing.txt

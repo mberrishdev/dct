@@ -1,0 +1,7 @@
+{
+  "templatePaths": {
+    "command": "./dct-templates/command.scriban",
+    "query": "./dct-templates/query.scriban",
+    "handler": "./dct-templates/handler.scriban"
+  }
+}
