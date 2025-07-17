@@ -1,5 +1,7 @@
 # dct (Dotnet CLI Tool)
 
+[![NuGet Version](https://img.shields.io/nuget/v/dct.svg?logo=nuget)](https://www.nuget.org/packages/dct)
+
 A .NET global CLI tool to rapidly generate CQRS and Clean Architecture components such as commands, queries, handlers, classes, and interfaces. Streamline your development workflow and enforce best practices with customizable templates and configuration.
 
 ## Features
@@ -15,6 +17,8 @@ After publishing to NuGet, install globally with:
 ```sh
 dotnet tool install -g dct
 ```
+
+Or see the latest version on [NuGet.org](https://www.nuget.org/packages/dct).
 
 ## Getting Started
 
@@ -85,6 +89,17 @@ Edit these files to match your coding standards and patterns. The tool will use 
 ### Dependencies
 - [Spectre.Console.Cli](https://www.nuget.org/packages/Spectre.Console.Cli)
 - [Scriban](https://www.nuget.org/packages/Scriban)
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork this repository and create your branch from `master`.
+2. Make your changes and add tests if applicable.
+3. Ensure all tests pass (`dotnet test`).
+4. Submit a pull request describing your changes.
+
+For feature requests, bug reports, or questions, please open an issue or visit the [NuGet package page](https://www.nuget.org/packages/dct).
 
 ## License
 
