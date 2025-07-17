@@ -6,6 +6,11 @@ using System.ComponentModel;
 var app = new CommandApp();
 app.Configure(config =>
 {
+    config.SetApplicationName("dct");
+    config.ValidateExamples();
+    config.PropagateExceptions();
+    config.SetApplicationVersion("0.0.3");
+
     config.AddCommand<CreateCommand>("create")
         .WithDescription("Generate code artifacts");
 
@@ -32,9 +37,13 @@ public class CreateCommand : Command<CreateCommand.Settings>
 
         var fullPath = settings.PathOrName;
         var name = Path.GetFileName(fullPath);
-        var outputDir = Path.GetDirectoryName(fullPath) ?? ".";
+        var outputDir = Path.GetDirectoryName(fullPath);
+        outputDir = string.IsNullOrWhiteSpace(outputDir) ? "." : outputDir;
 
-        Directory.CreateDirectory(outputDir);
+        if (outputDir != ".")
+        {
+            Directory.CreateDirectory(outputDir);
+        }
 
         var content = CodeGenerator.Generate(
             settings.Artifact,
@@ -48,7 +57,6 @@ public class CreateCommand : Command<CreateCommand.Settings>
             File.WriteAllText(outputPath, content);
             var absolutePath = Path.GetFullPath(Path.Combine(outputDir, $"{name}.cs"));
             AnsiConsole.MarkupLine($"[green]Generated file at:[/] {absolutePath}");
-
 
             return 0;
         }

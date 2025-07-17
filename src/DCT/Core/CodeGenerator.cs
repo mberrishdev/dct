@@ -1,5 +1,7 @@
+using System.Text.Json;
 using System.Xml.Linq;
 using Scriban;
+using Spectre.Console;
 
 namespace DCT.Core;
 
@@ -7,16 +9,21 @@ public static class CodeGenerator
 {
     public static string Generate(string artifactType, string name, string outputDirectory, string projectRoot = "./")
     {
-        var templatePath = artifactType.ToLower() switch
-        {
-            "command" => "./templates/command.scriban",
-            "query" => "./templates/query.scriban",
-            "handler" => "./templates/handler.scriban",
-            _ => null
-        };
+        var config = LoadConfig();
 
-        if (templatePath == null || !File.Exists(templatePath))
+        string? templatePath = null;
+        if (config?.TemplatePaths != null && config.TemplatePaths.TryGetValue(artifactType.ToLower(), out var path))
+        {
+            templatePath = path;
+        }
+
+        templatePath ??= Path.Combine(FindDctDirectory(Directory.GetCurrentDirectory()) ?? ".", "templates", $"{artifactType.ToLower()}.scriban");
+
+        if (!File.Exists(templatePath))
+        {
+            AnsiConsole.MarkupLine($"[red]Template not found at: {templatePath}[/]");
             return null;
+        }
 
         var @namespace = InferNamespace(GetBaseNamespace(projectRoot), outputDirectory, projectRoot);
 
@@ -36,11 +43,11 @@ public static class CodeGenerator
         {
             var defaultConfig = """
             {
-            "templatePaths": {
-                "command": "./.dct/templates/command.scriban",
-                "query": "./.dct/templates/query.scriban",
-                "handler": "./.dct/templates/handler.scriban"
-            }
+                "templatePaths": {
+                    "command": "./.dct/templates/command.scriban",
+                    "query": "./.dct/templates/query.scriban",
+                    "handler": "./.dct/templates/handler.scriban"
+                }
             }
             """;
             File.WriteAllText(configFilePath, defaultConfig);
@@ -59,6 +66,42 @@ public static class CodeGenerator
         {
             File.AppendAllText(gitignorePath, gitignoreEntry);
         }
+    }
+
+    private static DctConfig? LoadConfig()
+    {
+        var dctDir = FindDctDirectory(Directory.GetCurrentDirectory());
+        if (dctDir == null)
+        {
+            AnsiConsole.MarkupLine("[red].dct folder not found. Please run 'dct init' in your project root.[/]");
+            return null;
+        }
+        
+        var configPath = Path.Combine(dctDir, "dct-config.json");
+        if (!File.Exists(configPath))
+            return null;
+
+        var json = File.ReadAllText(configPath);
+        return JsonSerializer.Deserialize<DctConfig>(json);
+    }
+    
+    private static string? FindDctDirectory(string startPath)
+    {
+        var currentDir = new DirectoryInfo(startPath);
+        int depth = 0;
+
+        while (currentDir != null && depth < 10)
+        {
+            var dctPath = Path.Combine(currentDir.FullName, ".dct");
+            if (Directory.Exists(dctPath))
+            {
+                return dctPath;
+            }
+            currentDir = currentDir.Parent;
+            depth++;
+        }
+
+        return null;
     }
     
     private static string InferNamespace(string baseNamespace, string outputDirectory, string projectRoot)
@@ -89,4 +132,9 @@ public static class CodeGenerator
 
         return Path.GetFileNameWithoutExtension(csprojFile);
     }
+}
+
+public class DctConfig
+{
+    public Dictionary<string, string> TemplatePaths { get; set; } = new();
 }
