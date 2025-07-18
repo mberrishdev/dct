@@ -9,7 +9,7 @@ app.Configure(config =>
     config.SetApplicationName("dct");
     config.ValidateExamples();
     config.PropagateExceptions();
-    config.SetApplicationVersion("0.0.3");
+    config.SetApplicationVersion("0.0.5");
 
     config.AddCommand<CreateCommand>("create")
         .WithDescription("Generate code artifacts");

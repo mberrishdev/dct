@@ -59,13 +59,16 @@ public static class CodeGenerator
         File.WriteAllText(Path.Combine(templatesDir, "command.scriban"), "namespace {{ namespace }};\n\npublic record {{ name }}Command;");
         File.WriteAllText(Path.Combine(templatesDir, "query.scriban"), "namespace {{ namespace }};\n\npublic record {{ name }}Query;");
         File.WriteAllText(Path.Combine(templatesDir, "handler.scriban"), "namespace {{ namespace }};\n\npublic class {{ name }}Handler {}\n");
+        
+        var gitignorePath = Path.Combine(targetDirectory, ".gitignore");
+        const string gitignoreContent = """
+                                        *
+                                        !templates/
+                                        !dct-config.json
+                                        dct-config.json
+                                        """;
 
-        var gitignorePath = Path.Combine(targetDirectory, "../.gitignore");
-        var gitignoreEntry = ".dct/\n";
-        if (!File.Exists(gitignorePath) || !File.ReadAllText(gitignorePath).Contains(gitignoreEntry))
-        {
-            File.AppendAllText(gitignorePath, gitignoreEntry);
-        }
+        File.WriteAllText(gitignorePath, gitignoreContent);
     }
 
     private static DctConfig? LoadConfig()
