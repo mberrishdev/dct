@@ -86,7 +86,7 @@ public class CodeGeneratorTests
             .GetMethod("InferNamespace", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
 
         // Act
-        var ns = (string)method.Invoke(null, ["Base.Namespace", "Features/Commands", "."]);
+        var ns = (string)method!.Invoke(null, ["Base.Namespace", "Features/Commands"])!;
 
         // Assert
         Assert.Equal("Base.Namespace.Features.Commands", ns);
