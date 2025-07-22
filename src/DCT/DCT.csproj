@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>dct</PackageId>
-    <Version>0.0.6</Version>
+    <Version>0.0.7</Version>
     <Authors>MberrishDev</Authors>
     <Description>CLI tool to generate CQRS and Clean Architecture artifacts in .NET projects.</Description>
     <PackageTags>dotnet;cli;CQRS;CleanArchitecture;generator</PackageTags>

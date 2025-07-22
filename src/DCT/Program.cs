@@ -9,7 +9,7 @@ app.Configure(config =>
     config.SetApplicationName("dct");
     config.ValidateExamples();
     config.PropagateExceptions();
-    config.SetApplicationVersion("0.0.6");
+    config.SetApplicationVersion("0.0.7");
 
     config.AddCommand<CreateCommand>("create")
         .WithDescription("Generate code artifacts");
@@ -19,9 +19,9 @@ app.Configure(config =>
 
 return app.Run(args);
 
-internal abstract class CreateCommand : Command<CreateCommand.Settings>
+internal class CreateCommand : Command<CreateCommand.Settings>
 {
-    public abstract class Settings : CommandSettings
+    public class Settings : CommandSettings
     {
         [CommandArgument(1, "<pathOrName>")] public string PathOrName { get; set; } = string.Empty;
 
@@ -68,9 +68,9 @@ internal abstract class CreateCommand : Command<CreateCommand.Settings>
     }
 }
 
-internal abstract class InitCommand : Command<InitCommand.Settings>
+internal class InitCommand : Command<InitCommand.Settings>
 {
-    public abstract class Settings : CommandSettings
+    public class Settings : CommandSettings
     {
     }
 
